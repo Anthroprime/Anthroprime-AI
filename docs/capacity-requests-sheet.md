@@ -6,7 +6,7 @@ When Netlify verifies a `gpu-capacity` submission, `submission-created` can copy
 2. Add a tab named **GPU Capacity Requests** with these headers in row 1, in order:
 
    ```text
-   Submitted at (UTC) | Submission ID | GPU type | Number of GPUs / nodes | Required region | Preferred start date | Duration | Deployment model | Workload | Company name | Business email | Phone / WhatsApp | Contact consent
+   Submitted at (IST) | Submission ID | GPU type | Number of GPUs / nodes | Required region | Preferred start date | Duration | Deployment model | Workload | Company name | Business email | Phone / WhatsApp | Contact consent
    ```
 
 3. In Google Cloud, enable the **Google Sheets API** and **Google Drive API**. Create a dedicated service account with no project roles or domain-wide delegation. Give its email **Editor** access to this workbook only. Create a JSON key for that service account.
