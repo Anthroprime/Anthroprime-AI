@@ -2,6 +2,8 @@
 
 The GPU form now follows the Netlify Forms approach used by [Anthroprime.com](https://anthroprime.com/contact). Review the brief, consent to contact, then send. An accepted submission is stored by Netlify; its email notification is delivered by Netlify to the configured recipient.
 
+To also copy verified requests into a restricted Google Sheet, see [Save GPU capacity requests to Google Sheets](capacity-requests-sheet.md).
+
 ## Already implemented
 
 - Registered static form: `gpu-capacity`, declared in `index.html` for build-time form detection.

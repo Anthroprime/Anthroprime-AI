@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/build-pages.mjs",
     "preview": "vite preview",
-    "test": "node tests/run-tests.js && node --test tests/capacity-feed.test.mjs"
+    "test": "node tests/run-tests.js && node --test tests/capacity-feed.test.mjs tests/capacity-requests-sheet.test.mjs"
   },
   "engines": {
     "node": ">=22.12.0"
@@ -15,6 +15,7 @@
   "dependencies": {
     "@react-three/fiber": "^8.18.0",
     "framer-motion": "^11.3.21",
+    "google-auth-library": "^11.3.3",
     "lucide-react": "^0.441.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
