@@ -2,6 +2,7 @@ import { DEFAULTS, GPU_OPTIONS, DEPLOY_OPTIONS, buildBrief } from './request.js'
 
 export const REQUEST_EMAIL = 'hello@anthroprime.com'
 export const REQUEST_FORM = 'gpu-capacity'
+export const REQUEST_CONSENT = 'Yes — contact me about this GPU capacity request'
 export const REQUEST_LIMITS = {
   gpuType: 80,
   gpuQty: 500,
@@ -85,7 +86,7 @@ export function encodeCapacityRequest(form, consent) {
     'bot-field': '',
     subject: capacityEmailSubject(values),
     ...values,
-    consent: 'Yes — contact me about this GPU capacity request',
+    consent: REQUEST_CONSENT,
     brief: buildBrief(values)
   }).toString()
 }
