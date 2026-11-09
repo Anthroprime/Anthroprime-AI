@@ -4,6 +4,12 @@ import {
 } from '../../src/data/request-delivery.js'
 
 const TAB = 'GPU Capacity Requests'
+const submittedAtFormat = new Intl.DateTimeFormat('en-IN', {
+  timeZone: 'Asia/Kolkata',
+  dateStyle: 'medium',
+  timeStyle: 'medium',
+  hour12: true
+})
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
   'https://www.googleapis.com/auth/drive.metadata.readonly'
@@ -48,7 +54,7 @@ export function makeHandler({ env = process.env, createClient = makeClient } = {
       throw new Error('Capacity request event is missing submission metadata')
 
     const row = [
-      new Date(payload.created_at).toISOString(), payload.id,
+      `${submittedAtFormat.format(new Date(payload.created_at))} IST`, payload.id,
       values.gpuType, values.gpuQty, values.location, values.startDate,
       values.duration, values.deployType, values.workload, values.company,
       values.email, values.phone, data.consent

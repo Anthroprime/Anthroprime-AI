@@ -9,7 +9,7 @@ const fields = {
   company: 'Example Co', email: 'gpu@example.com', phone: '+91 0000000000'
 }
 const payload = {
-  form_name: 'gpu-capacity', id: 'test-submission', created_at: '2026-11-09T15:00:00Z',
+  form_name: 'gpu-capacity', id: 'test-submission', created_at: '2026-11-09T20:00:00Z',
   data: { ...Object.fromEntries(new URLSearchParams(encodeCapacityRequest(fields, true))), ip: '192.0.2.1' }
 }
 const request = (overrides = {}) => new Request('https://example.com/.netlify/functions/submission-created', {
@@ -29,7 +29,7 @@ test('appends a valid request as literal text to the dedicated tab', async () =>
   assert.match(decodeURIComponent(calls[1].url), /\/workbook\/values\/'GPU Capacity Requests'!A:M:append$/)
   assert.equal(calls[1].params.valueInputOption, 'RAW')
   assert.deepEqual(calls[1].data.values, [[
-    '2026-11-09T15:00:00.000Z', 'test-submission', 'H200', '8 GPUs', 'India', '2027-01-02',
+    '10 Nov 2026, 1:30:00 am IST', 'test-submission', 'H200', '8 GPUs', 'India', '2027-01-02',
     '6 months', 'Bare Metal', '=1+1', 'Example Co', 'gpu@example.com', '+91 0000000000', payload.data.consent
   ]])
 })
