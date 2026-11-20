@@ -607,6 +607,13 @@ function MemoryExplorer() {
                 metadata. Training adds gradients and optimizer state. This is
                 not a total VRAM estimate or a guarantee that a model will run.
               </p>
+              <p>
+                <Link to="/guides/gpu-memory-for-llms" className="underline">
+                  Estimate the full total, including KV cache, in our GPU
+                  memory guide
+                </Link>
+                .
+              </p>
             </div>
             <a
               className="lab-source"

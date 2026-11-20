@@ -16,18 +16,32 @@ import LogoMark from './LogoMark'
 import ScrollProgress from './ScrollProgress'
 import { GPU_NAV, GPUS } from '../data/gpus'
 import { SOLUTIONS } from '../data/solutions'
-import { getPageMeta, PUBLIC_ROUTES } from '../data/metadata'
 import { SERVICES } from '../data/services'
 import { useTheme, applyTheme } from '../theme'
 import { useMotionSettings } from './MotionSettings'
 
+// Prerendered pages already carry their head tags; this keeps them in step on
+// client-side navigation. Metadata is loaded on demand because it includes
+// every guide's text, which most visitors never need.
 function useDocumentMeta() {
   const { pathname } = useLocation()
   useEffect(() => {
+    let cancelled = false
+    import('../data/metadata').then((metadata) => {
+      if (!cancelled) applyDocumentMeta(pathname, metadata)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [pathname])
+}
+
+function applyDocumentMeta(pathname, { canonicalPath, getPageMeta, PUBLIC_ROUTES }) {
+  {
     const meta = getPageMeta(pathname)
-    const canonicalPath = pathname.replace(/\/+$/, '') || '/'
+    const route = pathname.replace(/\/+$/, '') || '/'
     let robots = document.querySelector('meta[name="robots"]')
-    if (!PUBLIC_ROUTES.includes(canonicalPath)) {
+    if (!PUBLIC_ROUTES.includes(route)) {
       if (!robots) {
         robots = document.createElement('meta')
         robots.name = 'robots'
@@ -39,7 +53,7 @@ function useDocumentMeta() {
     const canonical = document.querySelector('link[rel="canonical"]')
     if (canonical) {
       const url = new URL(canonical.href)
-      url.pathname = canonicalPath
+      url.pathname = canonicalPath(route)
       canonical.href = url.href
       document
         .querySelector('meta[property="og:url"]')
@@ -51,7 +65,7 @@ function useDocumentMeta() {
       ['meta[property="og:description"]', 'content', meta[1]]
     ])
       document.querySelector(selector)?.setAttribute(attr, content)
-  }, [pathname])
+  }
 }
 
 const navigation = [
@@ -125,6 +139,9 @@ export function Navbar() {
           <LogoMark />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
+          <NavLink className="nav-link nav-infra" to="/infrastructure">
+            AI Infrastructure
+          </NavLink>
           {navigation.map((item) => (
             <div
               className="nav-item"
@@ -251,11 +268,13 @@ export function Navbar() {
         >
           {[
             ['Home', '/'],
+            ['AI Infrastructure', '/infrastructure'],
             ['GPU Cloud', '/#capacity'],
               ['Capacity overview', '/capacity'],
             ['Solutions', '/solutions'],
             ['Services', '/services'],
             ['Resources', '/resources'],
+            ['Guides & comparisons', '/guides'],
             ['GPU Lab', '/gpu-lab'],
             ['Our practice', '/about'],
             ['Contact the desk', '/contact'],
@@ -297,9 +316,13 @@ export function Footer() {
           <div className="footer-col">
             <h3 className="mono">Explore</h3>
             {[
+              ['AI Infrastructure', '/infrastructure'],
+              ['Become a collaborator', '/infrastructure#join'],
               ['Our GPU offerings', '/#capacity'],
                 ['Capacity overview', '/capacity'],
               ['GPU comparison', '/resources#comparison'],
+              ['Guides & comparisons', '/guides'],
+              ['Glossary', '/glossary'],
               ['GPU Lab', '/gpu-lab'],
               ['AI solutions', '/solutions'],
               ['Find GPU Capacity', '/find-capacity']
@@ -391,6 +414,12 @@ export default function Layout() {
   useDocumentMeta()
   const { pathname } = useLocation()
   const { paused } = useMotionSettings()
+  // No fade on the first page view: the prerendered content stays visible
+  // (faster first paint, nothing hidden from crawlers). Later navigations fade.
+  const firstView = useRef(true)
+  useEffect(() => {
+    firstView.current = false
+  }, [])
   return (
     <div className="site-shell" id="top">
       <a className="skip-link" href="#main-content">
@@ -402,7 +431,7 @@ export default function Layout() {
       <main id="main-content" tabIndex={-1}>
         <motion.div
           key={pathname}
-          initial={paused ? false : { opacity: 0 }}
+          initial={paused || firstView.current ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.25 }}
         >

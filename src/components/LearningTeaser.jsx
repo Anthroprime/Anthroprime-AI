@@ -64,7 +64,7 @@ export function InfrastructureStory() {
     <section className="infrastructure-story">
       <img
         src="/images/compute-horizon.jpg"
-        alt="Generated conceptual interior of a GPU data center with blue-lit cooling pipes and gold status lights"
+        alt="Generated conceptual interior of a GPU data centre with blue-lit cooling pipes and gold status lights"
         width="2048"
         height="768"
         loading="lazy"
@@ -88,7 +88,7 @@ export function InfrastructureStory() {
           <ArrowUpRight />
         </Link>
         <span className="story-caption mono">
-          AI-generated concept environment · Not an Anthroprime facility
+          AI-generated concept environment · Not an AnthroPrime facility
           photograph
         </span>
       </Reveal>

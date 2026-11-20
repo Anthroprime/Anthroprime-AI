@@ -11,6 +11,7 @@ import {
 import { PageHero, Reveal, SectionHead } from '../components/ui'
 import { GPUS, GPU_ORDER, GPU_REFERENCES } from '../data/gpus'
 import FinalCTA from '../components/FinalCTA'
+import { COMPARISONS, GUIDES } from '../data/knowledge'
 
 const COMPARE_ROWS = [
   ['GPU memory', (g) => g.specs['GPU memory'] || g.specs['GPUs per rack']],
@@ -325,6 +326,41 @@ export default function Resources() {
                   </Link>
                 </Reveal>
               ))}
+            </div>
+            <div className="mt-12">
+              <SectionHead
+                tag="Guides & comparisons"
+                title="Read before you choose."
+              />
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+                {[
+                  ...COMPARISONS.map((c) => [`/compare/${c.slug}`, 'Comparison', c.title]),
+                  ...GUIDES.map((g) => [`/guides/${g.slug}`, 'Guide', g.title])
+                ].map(([to, tag, title]) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className="block rounded-2xl bg-surface border border-border p-6 hover:border-border2 hover:bg-surface2 transition-all"
+                  >
+                    <span className="font-mono text-[10px] tracking-wide uppercase text-faint">
+                      {tag}
+                    </span>
+                    <h3 className="font-display font-semibold text-[15.5px] mt-2">
+                      {title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-6">
+                <Link to="/guides" className="text-link">
+                  All guides and comparisons
+                  <ArrowUpRight />
+                </Link>
+                <Link to="/glossary" className="text-link">
+                  AI infrastructure glossary
+                  <ArrowUpRight />
+                </Link>
+              </div>
             </div>
             <div className="mt-6 font-mono text-[12px] text-faint">
               Need the knowledge now? It already lives with our desk —{' '}

@@ -5,11 +5,12 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anthroprime.ai — Global GPU Infrastructure. One Partner.</title>
+    <title>AnthroPrime — AI Infrastructure &amp; GPU Capacity Hub</title>
     <meta
       name="description"
-      content="Anthroprime.ai provides GPU infrastructure for enterprises, AI companies and research organizations. Dedicated GPU capacity, clusters and managed AI infrastructure. One Partner. Global GPU Infrastructure."
+      content="One accountable partner for AI infrastructure and GPU capacity — H100, H200, B200 and GB300 through a vetted network of cloud, data centre and power partners."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#f5f4f1" />
     <script>
       /* Set theme before first paint to avoid a flash of the wrong theme. */
@@ -29,24 +30,38 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
     <meta
       property="og:title"
-      content="Anthroprime.ai — Global GPU Infrastructure. One Partner."
+      content="AnthroPrime — AI Infrastructure &amp; GPU Capacity Hub"
     />
     <meta
       property="og:description"
-      content="Deploy and scale with Anthroprime GPU infrastructure, dedicated clusters and managed AI environments."
+      content="One accountable partner for AI infrastructure and GPU capacity — H100, H200, B200 and GB300 through a vetted network of cloud, data centre and power partners."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AnthroPrime" />
+    <meta property="og:locale" content="en_GB" />
+    <noscript
+      ><style>
+        /* Prerendered content stays visible without JavaScript (no scroll reveal). */
+        #root [style*='opacity:0'] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style></noscript
+    >
   </head>
   <body
     class="bg-bg text-text antialiased selection:bg-accent selection:text-bg"
   >
     <div id="root"></div>
     <noscript
-      ><p>
-        Enable JavaScript to explore Anthroprime GPU infrastructure. You can
-        also contact
+      ><p style="padding: 16px; text-align: center">
+        Forms and interactive diagrams need JavaScript. You can also contact
         <a href="mailto:hello@anthroprime.com">hello@anthroprime.com</a>
         directly.
       </p></noscript
@@ -79,6 +94,26 @@
       <input type="text" name="phone" />
       <input type="text" name="consent" />
       <textarea name="brief"></textarea>
+    </form>
+    <form
+      name="collaborator"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="collaborator" />
+      <input type="hidden" name="subject" value="New collaborator" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="company" />
+      <input type="text" name="website" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="phone" />
+      <input type="text" name="collaboratorType" />
+      <textarea name="offer"></textarea>
+      <input type="text" name="regions" />
+      <input type="text" name="consent" />
     </form>
   </body>
 </html>

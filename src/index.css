@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Fonts load from a <link> in index.html, not @import (avoids a render-blocking chain). */
 @import 'tailwindcss';
 @config '../tailwind.config.js';
 :root {
@@ -638,6 +638,20 @@
   color: #a9b4ca;
   max-width: 200px;
 }
+.hero-bottom.hero-claims .number {
+  font-size: clamp(24px, 2.3vw, 31px);
+}
+.hero-claims .number em {
+  display: block;
+  font-size: 0.72em;
+  margin-top: 4px;
+}
+@media (max-width: 800px) {
+  .hero-bottom.hero-claims .number {
+    font-size: 21px;
+    overflow-wrap: anywhere;
+  }
+}
 .gpu-marquee {
   border-bottom: 1px solid rgb(var(--c-border));
   overflow: hidden;
@@ -938,6 +952,16 @@
   position: relative;
   border-top: 1px solid rgb(var(--c-border2));
   padding-top: 24px;
+}
+.process-grid--five {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 28px;
+  margin-top: 34px;
+}
+.process-flow {
+  color: rgb(var(--c-gold));
+  font-size: 11px;
+  letter-spacing: 0.16em;
 }
 .process-step:before {
   content: '';
@@ -1273,6 +1297,7 @@
   line-height: 1.02;
   max-width: 900px;
   margin-top: 25px;
+  font-variant-numeric: lining-nums;
 }
 .page-hero h1 > span {
   color: rgb(var(--c-gold));
@@ -1527,6 +1552,48 @@
   font-size: 10px;
   color: rgb(var(--c-faint));
   margin-top: 14px;
+}
+.request-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+.request-type-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1px solid rgb(var(--c-border));
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgb(var(--c-muted));
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.request-type-option svg {
+  flex-shrink: 0;
+}
+.request-type-option.is-active {
+  border-color: rgb(var(--c-accent));
+  color: rgb(var(--c-text));
+  background: rgb(var(--c-accent) / 0.06);
+}
+.request-type-option.is-active svg {
+  color: rgb(var(--c-accent));
+}
+a.request-type-option:hover {
+  border-color: rgb(var(--c-gold));
+  color: rgb(var(--c-text));
+}
+@media (max-width: 560px) {
+  .request-type {
+    grid-template-columns: 1fr;
+  }
 }
 .prefill-note {
   color: rgb(var(--c-accent));
