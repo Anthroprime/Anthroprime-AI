@@ -182,7 +182,9 @@ export function PageHero({
   diagram,
   diagramLabel
 }) {
-  const { paused } = useMotionSettings()
+  // The hero is above the fold: no entrance animation on the first page view.
+  const { paused: motionPaused, firstView } = useMotionSettings()
+  const paused = motionPaused || firstView
   const variant =
     diagram ||
     { Company: 'practice', 'GPU Cloud': 'gpu' }[crumb.split(' / ')[0]] ||

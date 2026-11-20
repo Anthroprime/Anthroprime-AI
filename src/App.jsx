@@ -21,10 +21,21 @@ const FindCapacity = lazy(() => import('./pages/FindCapacity'))
 const Capacity = lazy(() => import('./pages/Capacity'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 const GpuLab = lazy(() => import('./pages/GpuLab'))
+const Infrastructure = lazy(() => import('./pages/Infrastructure'))
+const knowledge = (name) =>
+  lazy(() =>
+    import('./pages/Knowledge').then((module) => ({ default: module[name] }))
+  )
+const KnowledgeIndex = knowledge('KnowledgeIndex')
+const GuidePage = knowledge('GuidePage')
+const ComparePage = knowledge('ComparePage')
+const GlossaryIndex = knowledge('GlossaryIndex')
+const GlossaryTerm = knowledge('GlossaryTerm')
 
 /**
  * Anthroprime.ai — multi-page site
  *
+ * /infrastructure        AI Infrastructure — hub-and-spoke collaborator model
  * /                      Home (hero, GPU offerings, clusters, how-it-works,
  *                          global network, services, who-we-serve, why-us)
  * /marketplace           Legacy redirect to the GPU offerings section
@@ -42,6 +53,12 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/infrastructure" element={<Infrastructure />} />
+        <Route path="/guides" element={<KnowledgeIndex />} />
+        <Route path="/guides/:slug" element={<GuidePage />} />
+        <Route path="/compare/:slug" element={<ComparePage />} />
+        <Route path="/glossary" element={<GlossaryIndex />} />
+        <Route path="/glossary/:slug" element={<GlossaryTerm />} />
         <Route
           path="/marketplace"
           element={<Navigate to="/#capacity" replace />}

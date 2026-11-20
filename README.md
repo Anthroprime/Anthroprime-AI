@@ -12,7 +12,9 @@ Vite 7 + React 18 + Tailwind CSS 4 + Framer Motion + **react-router-dom** + **th
 
 | Route | Page |
 |---|---|
-| `/` | Home — animated GPU core, GPU offerings, clusters, deployment process, regional planning map, solutions and capacity requests |
+| `/` | Home — AI Infrastructure-led hero with the hub-and-spoke diagram and claims strip, then GPU offerings, clusters, deployment process, regional planning map, solutions and capacity requests |
+| `/guides`, `/guides/:slug`, `/compare/:slug`, `/glossary`, `/glossary/:slug` | SEO content hub: GPU comparisons (H100 vs H200, H200 vs B200, A100 vs H100), guides (70B memory sizing with calculator, choosing inference GPUs, bare metal vs managed, GB200 NVL72) and glossary (NVLink, InfiniBand vs RoCE, HBM3e, MIG, liquid cooling). Content lives in `src/data/knowledge.js`; memory maths in `src/data/llm-memory.js`. Add an entry there and it is routed, prerendered, added to the sitemap and given structured data automatically |
+| `/infrastructure` | AI Infrastructure — hub-and-spoke collaborator model (brief of 18 Nov 2026): interactive diagram, hub roles, eight collaborator types, services, five-step process, entry paths, **Become a collaborator** form (Netlify form `collaborator`), FAQ. Content lives in `src/data/infrastructure.js` |
 | `/marketplace` | Legacy URL only: redirects to `/#capacity`. The marketplace page and third-party listings have been removed |
 | `/gpu/:slug` | GPU detail pages: `h100` `h200` `b200` `gb200` `a100` `l40s` — datasheet specs, variants, reference node configs, direct capacity requests |
 | `/solutions` | Solutions index (6 solutions) |
@@ -77,7 +79,8 @@ Both development and preview servers bind to loopback only. No deployment is req
 ## Existing hosting configuration
 
 - Build: `npm run build` · Publish: `dist` · Node 22.12+ (see `netlify.toml`)
-- SPA fallback via `/* → /index.html 200`
+- Every public route is pre-built as `<route>/index.html`; Netlify serves it at `/route/` (and 301s `/route` there), so canonical URLs and the sitemap use the trailing slash
+- Unknown URLs: `/* → /404.html 404` (noindex page that boots the SPA). Legacy `/marketplace` 301s to `/#capacity`. All redirects live in `netlify.toml`
 - Netlify form: `gpu-capacity` (static detection in `index.html`, honeypot, consent, and structured payload). Enable form detection and configure its email recipient as `hello@anthroprime.com` in the Netlify project before launch.
 
 ## Attribution
@@ -87,9 +90,17 @@ Accelerator names are the property of their respective owners. Hardware specific
 ---
 © 2026 Anthroprime Technology Private Limited
 
+## SEO
+
+- **Prerendered HTML.** `npm run build` also builds `src/entry-server.jsx` for Node and `scripts/build-pages.mjs` renders every public route to full HTML (`dist/<route>/index.html`), so crawlers that do not run JavaScript see the whole page. The browser hydrates that HTML (`src/main.jsx`). Keep first renders deterministic: anything that depends on `window`, the theme or reduced-motion is read in an effect, not during render.
+- **Metadata.** Titles (≤ 60 characters) and descriptions (≤ 160) live in `src/data/metadata.js`, one primary query per page.
+- **Structured data.** `src/data/structured-data.js` emits JSON-LD per page: Organization, WebSite, WebPage, BreadcrumbList, Service, and FAQPage on `/infrastructure`. It mirrors visible content only: no prices or ratings.
+- **Sitemap and robots** are generated with `lastmod` when `SITE_URL` is set (Netlify sets it).
+- `npm test` guards all of the above.
+
 ## Final production review
 
-Inner pages now include interactive animated diagrams. See [docs/production-readiness.md](docs/production-readiness.md) for the audit, verification scope, and launch configuration. `npm run build` emits route-specific head metadata; set `SITE_URL` to the confirmed public HTTPS origin to add canonical URLs and a sitemap. The site remains a client-rendered SPA. Capacity requests use explicit review and send, with a local-only fallback. See [email setup](docs/form-email-setup.md).
+Inner pages now include interactive animated diagrams. See [docs/production-readiness.md](docs/production-readiness.md) for the audit, verification scope, and launch configuration. `npm run build` emits route-specific head metadata; set `SITE_URL` to the confirmed public HTTPS origin to add canonical URLs and a sitemap. Capacity requests use explicit review and send, with a local-only fallback. See [email setup](docs/form-email-setup.md).
 
 ## Production pipeline
 

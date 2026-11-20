@@ -1,0 +1,322 @@
+.hub-diagram {
+  --hub-ink: rgb(var(--c-accent));
+  --hub-text: rgb(var(--c-text));
+  --hub-muted: rgb(var(--c-muted));
+  --hub-gold: rgb(var(--c-gold));
+  --hub-node: rgb(var(--c-surface));
+  --hub-border: rgb(var(--c-border));
+  --hub-core: #142039;
+}
+.hero .hub-diagram {
+  --hub-ink: #9fb0e3;
+  --hub-text: #e9e7e1;
+  --hub-muted: #a7b4ce;
+  --hub-gold: #c7b296;
+  --hub-node: #16233f;
+  --hub-border: #ffffff26;
+  --hub-core: #0c1529;
+}
+.hub-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.hub-orbit {
+  fill: none;
+  stroke: var(--hub-ink);
+  stroke-opacity: 0.14;
+  stroke-dasharray: 2 8;
+}
+.hub-line {
+  stroke: var(--hub-ink);
+  stroke-opacity: 0.35;
+  stroke-width: 1.2;
+  transition:
+    stroke 0.25s,
+    stroke-opacity 0.25s;
+}
+.is-active > .hub-line {
+  stroke: var(--hub-gold);
+  stroke-opacity: 1;
+  stroke-width: 1.6;
+}
+.hub-pulse {
+  stroke: var(--hub-gold);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 5 95;
+  stroke-dashoffset: 100;
+  fill: none;
+  animation: hub-pulse 3.6s linear infinite;
+}
+.hub-pulse-client {
+  stroke-width: 4;
+  stroke-dasharray: 10 90;
+  animation-duration: 2.4s;
+}
+@keyframes hub-pulse {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.hub-client-line {
+  stroke: var(--hub-gold);
+  stroke-width: 5;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.hub-core {
+  fill: var(--hub-core);
+  stroke: var(--hub-gold);
+  stroke-width: 1.2;
+}
+.hub-name,
+.hub-role {
+  font-family: 'IBM Plex Mono', monospace;
+  pointer-events: none;
+}
+.hub-name {
+  fill: #f5f4f1;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.hub-role {
+  fill: #c7b296;
+  font-size: 7.5px;
+  letter-spacing: 0.08em;
+}
+.hub-node {
+  outline: none;
+}
+.hub-diagram--full .hub-node {
+  cursor: pointer;
+}
+.hub-hit {
+  fill: transparent;
+}
+.hub-node-ring {
+  fill: var(--hub-node);
+  stroke: var(--hub-border);
+  stroke-width: 1.2;
+  transition:
+    stroke 0.25s,
+    fill 0.25s;
+}
+.hub-node-icon {
+  color: var(--hub-ink);
+  transition: color 0.25s;
+}
+.hub-label {
+  fill: var(--hub-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: fill 0.25s;
+}
+.hub-node.is-active .hub-node-ring,
+.hub-node:hover .hub-node-ring {
+  stroke: var(--hub-gold);
+}
+.hub-node.is-active .hub-node-icon,
+.hub-node.is-active .hub-label {
+  color: var(--hub-gold);
+  fill: var(--hub-gold);
+}
+.hub-node:focus-visible .hub-node-ring {
+  stroke: var(--hub-gold);
+  stroke-width: 3;
+}
+.hub-client rect {
+  fill: var(--hub-core);
+  stroke: var(--hub-gold);
+}
+.hub-client text {
+  fill: #f5f4f1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+}
+
+/* Full, interactive version */
+.hub-diagram--full {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+.hub-figure {
+  margin: 0;
+  padding: 26px;
+  border: 1px solid rgb(var(--c-border));
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgb(var(--c-surface)), rgb(var(--c-bg)));
+}
+.hub-figure figcaption {
+  color: rgb(var(--c-faint));
+  font-size: 9px;
+  text-align: center;
+  margin-top: 12px;
+}
+.hub-panel {
+  border-left: 1px solid rgb(var(--c-border));
+  padding-left: clamp(20px, 3vw, 36px);
+  min-height: 260px;
+}
+.hub-panel-index {
+  color: rgb(var(--c-gold));
+}
+.hub-panel h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-top: 14px;
+}
+.hub-panel p {
+  color: rgb(var(--c-muted));
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.hub-panel-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+.hub-panel-chips button {
+  font-size: 11px;
+  border: 1px solid rgb(var(--c-border));
+  border-radius: 99px;
+  padding: 6px 12px;
+  color: rgb(var(--c-muted));
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.hub-panel-chips button:hover,
+.hub-panel-chips button[aria-pressed='true'] {
+  border-color: rgb(var(--c-gold));
+  color: rgb(var(--c-text));
+}
+.hub-list {
+  display: none;
+}
+
+/* Mobile: collapse into a vertical list */
+@media (max-width: 720px) {
+  .hub-diagram--full {
+    display: block;
+  }
+  .hub-diagram--full .hub-figure,
+  .hub-diagram--full .hub-panel {
+    display: none;
+  }
+  .hub-list {
+    display: block;
+  }
+  .hub-list-hub {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 16px;
+    background: #142039;
+    color: #f5f4f1;
+  }
+  .hub-list-hub img {
+    border-radius: 8px;
+    flex: none;
+  }
+  .hub-list-hub h3 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .hub-list-hub p {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #c3cadb;
+    margin-top: 6px;
+  }
+  .hub-list ul {
+    margin: 0;
+    padding: 0 0 0 22px;
+    list-style: none;
+    border-left: 1px solid rgb(var(--c-gold) / 0.6);
+    margin-left: 28px;
+  }
+  .hub-list li {
+    border-bottom: 1px solid rgb(var(--c-border));
+  }
+  .hub-list summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    cursor: pointer;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .hub-list summary::-webkit-details-marker {
+    display: none;
+  }
+  .hub-list summary > svg:first-child {
+    width: 18px;
+    height: 18px;
+    color: rgb(var(--c-accent));
+    flex: none;
+  }
+  .hub-list summary span {
+    flex: 1;
+  }
+  .hub-chevron {
+    width: 16px;
+    height: 16px;
+    color: rgb(var(--c-muted));
+    transition: transform 0.2s;
+  }
+  .hub-list details[open] .hub-chevron {
+    transform: rotate(180deg);
+  }
+  .hub-list details p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgb(var(--c-muted));
+    padding: 0 0 16px 30px;
+  }
+  .hub-list-client {
+    margin-top: 0;
+    margin-left: 28px;
+    padding: 14px 0 0 22px;
+    border-left: 4px solid rgb(var(--c-gold));
+    color: rgb(var(--c-text));
+    font-size: 10px;
+  }
+}
+
+/* Compact hero version */
+.hub-diagram--compact {
+  margin: 0;
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+}
+@media (max-width: 800px) {
+  .hub-diagram--compact {
+    justify-self: center;
+    max-width: 420px;
+    margin-top: 28px;
+  }
+  .hub-diagram--compact .hub-label {
+    font-size: 13.5px;
+  }
+}
+@media (max-width: 480px) {
+  .hub-diagram--compact .hub-label {
+    display: none;
+  }
+}

@@ -1,8 +1,7 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowUpRight,
-  ArrowDown,
   ShieldCheck,
   Network,
   Server,
@@ -20,10 +19,8 @@ import LearningTeaser, {
   InfrastructureStory
 } from '../components/LearningTeaser'
 import GpuFaq from '../components/GpuFaq'
-
-const InfrastructureScene = lazy(
-  () => import('../components/InfrastructureScene')
-)
+import HubSpokeDiagram from '../components/HubSpokeDiagram'
+import { INFRA_STEPS } from '../data/infrastructure'
 
 function Hero() {
   return (
@@ -33,13 +30,13 @@ function Hero() {
         <div className="hero-topline mono">
           <span>
             <span className="status-dot" />
-            Anthroprime / GPU Capacity Desk
+            AnthroPrime / AI Infrastructure
           </span>
           <span>India-led. Globally connected. ↗</span>
         </div>
         <div className="hero-main">
           <div className="hero-copy">
-            <div className="eyebrow mono">Built for your next breakthrough</div>
+            <div className="eyebrow mono">One accountable partner</div>
             <h1>
               <Typewriter
                 speed={24}
@@ -47,83 +44,65 @@ function Hero() {
                 linePause={140}
                 caret={false}
                 lines={[
-                  { text: 'Global GPU' },
-                  { text: 'Infrastructure.' },
-                  { text: 'One Partner.', className: 'gold-line' }
+                  { text: 'The hub for' },
+                  { text: 'AI infrastructure.', className: 'gold-line' }
                 ]}
               />
             </h1>
             <p className="hero-description">
-              Extraordinary AI starts with the right foundation. Deploy and
-              scale with Anthroprime’s GPU infrastructure, dedicated clusters,
-              and managed AI environments.
+              One accountable partner. A vetted network of compute, data
+              centre, power, cooling and capital collaborators. AI capacity
+              that is sourced, verified and ready to run.
             </p>
             <div className="hero-actions">
               <Link className="btn btn-gold" to="/find-capacity">
-                Find GPU Capacity
+                Discuss your capacity requirement
                 <ArrowUpRight />
               </Link>
-              <Link className="btn btn-outline" to="/#capacity">
-                Explore our GPUs
+              <Link className="btn btn-outline" to="/infrastructure#network">
+                See how the network works
                 <ArrowUpRight />
               </Link>
             </div>
             <div className="hero-footnote mono">
               <ShieldCheck />
-              Your GPU provider. Workload-led. Human first.
+              Independent. Multi-provider. Security built in.
             </div>
           </div>
-          <div
-            className="core-visual"
-            role="img"
-            aria-label="Animated GPU core surrounded by orbital infrastructure connections"
-          >
-            <span className="core-coordinates mono">
-              COMPUTE CORE / 01 — 06
-            </span>
-            <Suspense fallback={<div className="visual-fallback">AI CORE</div>}>
-              <InfrastructureScene />
-            </Suspense>
-            <span className="core-label top mono">Accelerated compute</span>
-            <span className="core-label right mono">Connected capacity</span>
-            <span className="core-label bottom mono">
-              Your next possibility
-            </span>
-            <span className="core-note mono">
-              Illustrative infrastructure visualization
-            </span>
-          </div>
+          <HubSpokeDiagram variant="compact" />
         </div>
-        <div className="hero-bottom">
+        <div className="hero-bottom hero-claims">
           <div>
             <p className="intro">
-              The infrastructure behind
+              AI capacity, sourced,
               <br />
-              your next big idea.
+              verified and ready to run.
             </p>
-            <a href="#capacity" className="mono caption inline-flex gap-3">
-              Discover what’s possible
-              <ArrowDown size={12} />
-            </a>
+            <Link
+              to="/infrastructure"
+              className="mono caption inline-flex gap-3"
+            >
+              Explore AI Infrastructure
+              <ArrowUpRight size={12} />
+            </Link>
           </div>
           <div>
             <span className="number">
-              {GPU_ORDER.length}
-              <em> families</em>
+              One <em>accountable hub</em>
             </span>
-            <span className="mono caption">Accelerator options</span>
+            <span className="mono caption">A single point of contact</span>
           </div>
           <div>
             <span className="number">
-              AI <em>at scale</em>
+              Multi-provider <em>network</em>
             </span>
-            <span className="mono caption">Training & inference</span>
+            <span className="mono caption">The right collaborator per need</span>
           </div>
           <div>
             <span className="number">
-              One <em>partner</em>
+              Verified <em>before you sign</em>
             </span>
-            <span className="mono caption">From brief to deployment</span>
+            <span className="mono caption">Technical & commercial assurance</span>
           </div>
         </div>
       </div>
@@ -173,7 +152,7 @@ function GpuCloudSection() {
           <Reveal delay={0.1}>
             <p>
               From experimentation to enterprise scale. Explore the accelerators
-              and dedicated infrastructure available through Anthroprime.
+              and dedicated infrastructure available through AnthroPrime.
             </p>
             <Link to="/resources#comparison" className="text-link mt-4">
               Compare GPU specifications
@@ -306,41 +285,31 @@ function HowItWorks() {
             </h2>
           </Reveal>
           <p>
-            One team stays with you from the first question to the first
-            workload. Work directly with Anthroprime for your GPU
-            infrastructure.
+            One accountable team stays with you from the first question to the
+            running workload, with the right collaborators behind it.
           </p>
         </div>
-        <div className="process-grid">
-          {[
-            [
-              '01',
-              'Start with your world',
-              'Your workload, scale, geography, and timeline become a clear, comparable requirement.'
-            ],
-            [
-              '02',
-              'Find the right fit',
-              'We assess your workload and confirm the right GPU configuration, deployment model, and available capacity.'
-            ],
-            [
-              '03',
-              'Make the connection',
-              'Agree your configuration, timeline, and commercial terms directly with Anthroprime.'
-            ],
-            [
-              '04',
-              'Build what’s next',
-              'We coordinate deployment, validate the environment, and support your next scaling event.'
-            ]
-          ].map(([n, t, d], i) => (
-            <Reveal className="process-step" delay={i * 0.1} key={n}>
-              <span>{n}</span>
-              <h3>{t}</h3>
-              <p>{d}</p>
+        <p className="process-flow mono" aria-label="Define, Source, Verify, Deploy, Govern">
+          {INFRA_STEPS.map(([step], i) => (
+            <React.Fragment key={step}>
+              {i > 0 && <span aria-hidden="true"> → </span>}
+              <span aria-hidden="true">{step.toUpperCase()}</span>
+            </React.Fragment>
+          ))}
+        </p>
+        <div className="process-grid process-grid--five">
+          {INFRA_STEPS.map(([step, text], i) => (
+            <Reveal className="process-step" delay={i * 0.08} key={step}>
+              <span>{String(i + 1).padStart(2, '0')}</span>
+              <h3>{step}</h3>
+              <p>{text}.</p>
             </Reveal>
           ))}
         </div>
+        <Link to="/infrastructure#how-we-work" className="text-link mt-8">
+          How we work, step by step
+          <ArrowUpRight />
+        </Link>
       </div>
     </section>
   )
@@ -363,7 +332,7 @@ const regions = [
     name: 'Middle East',
     x: 471,
     y: 181,
-    note: 'Find regional infrastructure options for latency-sensitive and enterprise AI programs.'
+    note: 'Find regional infrastructure options for latency-sensitive and enterprise AI programmes.'
   },
   {
     name: 'India',
@@ -570,8 +539,8 @@ function WhyUs() {
         {[
           [
             Compass,
-            'Your GPU infrastructure provider',
-            'Work directly with Anthroprime for GPU capacity and infrastructure built around your workload.'
+            'Your accountable hub',
+            'Work directly with AnthroPrime for GPU capacity and AI infrastructure, sourced across a vetted collaborator network.'
           ],
           [
             ShieldCheck,

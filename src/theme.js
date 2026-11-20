@@ -31,8 +31,11 @@ export function applyTheme(theme) {
 
 /** React hook: returns 'light' | 'dark' and re-renders on theme changes. */
 export function useTheme() {
-  const [theme, setTheme] = useState(getTheme)
+  // 'light' on the first render matches the prerendered HTML; the effect
+  // then reads the real theme set by the inline script in index.html.
+  const [theme, setTheme] = useState('light')
   useEffect(() => {
+    setTheme(getTheme())
     const onChange = () => setTheme(getTheme())
     window.addEventListener('ap-theme-change', onChange)
     return () => window.removeEventListener('ap-theme-change', onChange)

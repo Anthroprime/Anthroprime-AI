@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
+  Handshake,
   ArrowUpRight,
   ArrowRight,
   Check,
@@ -96,10 +97,16 @@ export default function FindCapacity() {
   const statusRef = useRef(null)
   const sending = delivery === 'sending'
   const sent = delivery === 'sent'
-  const online = canSubmitRequest(
-    import.meta.env.VITE_NETLIFY_FORMS_ENABLED === 'true',
-    typeof window !== 'undefined' ? window.location.hostname : ''
-  )
+  // Decided after mount so the prerendered HTML matches the first render.
+  const [online, setOnline] = useState(false)
+  useEffect(() => {
+    setOnline(
+      canSubmitRequest(
+        import.meta.env.VITE_NETLIFY_FORMS_ENABLED === 'true',
+        window.location.hostname
+      )
+    )
+  }, [])
   const reviewRef = useRef(null)
   const formRef = useRef(null)
   const selectOffering = (row) => {
@@ -293,6 +300,21 @@ export default function FindCapacity() {
               <div className="form-heading">
                 <span className="mono">01 / Your capacity brief</span>
                 <FileText size={18} />
+              </div>
+              <div
+                className="request-type"
+                role="group"
+                aria-label="What would you like to do?"
+              >
+                <span className="request-type-option is-active" aria-current="true">
+                  <Check size={15} aria-hidden="true" />
+                  Secure capacity for AI workloads
+                </span>
+                <Link to="/infrastructure#join" className="request-type-option">
+                  <Handshake size={15} aria-hidden="true" />
+                  Offer capacity or space to our network
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </Link>
               </div>
               {!!state?.gpu && (
                 <p className="prefill-note">

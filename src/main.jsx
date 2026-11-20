@@ -7,7 +7,7 @@ import MotionSettings from './components/MotionSettings'
 import './index.css'
 import './learning.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const app = (
   <React.StrictMode>
     <AppBoundary>
       <BrowserRouter>
@@ -18,3 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </AppBoundary>
   </React.StrictMode>
 )
+
+const root = document.getElementById('root')
+// Production pages are prerendered (scripts/build-pages.mjs): hydrate them.
+// The dev server and unknown URLs start empty and render on the client.
+if (root.hasChildNodes()) ReactDOM.hydrateRoot(root, app)
+else ReactDOM.createRoot(root).render(app)

@@ -14,6 +14,17 @@ import { GPUS, GPU_ORDER, GPU_REFERENCES, gpuBySlug } from '../data/gpus'
 import { useTheme } from '../theme'
 import FinalCTA from '../components/FinalCTA'
 import { useMotionSettings } from '../components/MotionSettings'
+import { relatedLink } from '../data/knowledge'
+
+// Comparison and guide pages relevant to each GPU (internal linking).
+const GPU_READING = {
+  h100: ['h100-vs-h200', 'a100-vs-h100', 'gpu-memory-for-llms'],
+  h200: ['h100-vs-h200', 'h200-vs-b200', 'gpu-memory-for-llms'],
+  b200: ['h200-vs-b200', 'gb200-nvl72-explained', 'choosing-gpus-for-inference'],
+  gb200: ['gb200-nvl72-explained', 'h200-vs-b200', 'liquid-cooling'],
+  a100: ['a100-vs-h100', 'choosing-gpus-for-inference', 'mig'],
+  l40s: ['choosing-gpus-for-inference', 'gpu-memory-for-llms', 'bare-metal-vs-managed-gpu']
+}
 
 function AvailabilityPanel({ slug }) {
   return (
@@ -88,8 +99,13 @@ export default function GpuDetail() {
     <>
       <PageHero
         crumb={`GPU Cloud / ${gpu.name}`}
-        title={gpu.name}
-        highlight={gpu.generation}
+        title={`NVIDIA ${gpu.name}`}
+        highlight={
+          /NVL/.test(gpu.full)
+            ? `NVL72 · ${gpu.generation}`
+            : `${gpu.generation} GPU`
+        }
+        diagramLabel={gpu.name}
         sub={gpu.desc}
       >
         <div className="flex flex-wrap items-center gap-3">
@@ -380,6 +396,27 @@ export default function GpuDetail() {
       {/* prev / next + related */}
       <section className="pb-16">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
+          <div className="mb-10">
+            <div className="font-mono text-[10px] uppercase tracking-wide text-faint mb-3">
+              Compare and learn
+            </div>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {(GPU_READING[slug] || []).map(relatedLink).filter(Boolean).map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="group rounded-xl bg-surface border border-border p-5 hover:border-accent/25 hover:bg-surface2 transition-all"
+                >
+                  <div className="font-mono text-[10px] uppercase tracking-wide text-faint">
+                    {l.kind}
+                  </div>
+                  <div className="font-display font-semibold text-[15px] mt-1 group-hover:text-accent transition-colors">
+                    {l.title}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {rel.map((s) => {
               const g = GPUS[s]

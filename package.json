@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/build-pages.mjs",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-server --emptyOutDir && node scripts/build-pages.mjs",
     "preview": "vite preview",
     "test": "node tests/run-tests.js && node --test tests/capacity-feed.test.mjs tests/capacity-requests-sheet.test.mjs"
   },

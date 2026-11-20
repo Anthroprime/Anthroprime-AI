@@ -6,10 +6,24 @@
   NODE_VERSION = "22"
   SITE_URL = "https://anthroprime.ai"
 
+# Legacy marketplace URLs: permanent redirect to the GPU offerings section.
+[[redirects]]
+  from = "/marketplace"
+  to = "/#capacity"
+  status = 301
+
+[[redirects]]
+  from = "/marketplace/*"
+  to = "/#capacity"
+  status = 301
+
+# Every public route is pre-rendered as <route>/index.html by
+# scripts/build-pages.mjs, and Netlify serves existing files before this rule.
+# Anything else is a real 404: 404.html boots the SPA and is marked noindex.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
 
 [[headers]]
   for = "/*"
